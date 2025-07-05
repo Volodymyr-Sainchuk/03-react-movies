@@ -24,6 +24,7 @@ export default function App() {
     const fetchMovies = async () => {
       setLoader(true);
       try {
+        console.log("Fetching");
         const response = await axios.get("https://api.themoviedb.org/3/search/movie", {
           params: { query },
           headers: {
