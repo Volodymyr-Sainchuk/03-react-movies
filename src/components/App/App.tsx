@@ -38,18 +38,15 @@ export default function App() {
 
         if (data.results && data.results.length > 0) {
           setMovies(data.results);
-          setQuery("");
         } else {
           toast.error("Фільми за цим запитом не знайдено.");
           setMovies([]);
         }
       } catch (error) {
         setHasError(true);
-
         if (import.meta.env.DEV) {
           console.error("Помилка при пошуку фільмів:", error);
         }
-
         toast.error("Сталася помилка під час пошуку.");
         setMovies([]);
       } finally {
