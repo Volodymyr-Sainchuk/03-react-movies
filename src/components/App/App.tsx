@@ -57,7 +57,7 @@ export default function App() {
   };
 
   const handleSelect = (movie: Movie) => {
-    toast.success(`Ви обрали: ${movie.title}`);
+    setSelectedMovie(movie);
   };
 
   const handleCloseModal = () => {
