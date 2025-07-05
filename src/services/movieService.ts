@@ -1,5 +1,12 @@
 import axios from "axios";
-import type Movie from "../types/movie";
+import type { Movie } from "../types/movie";
+
+interface SearchMoviesResponse {
+  page: number;
+  results: Movie[];
+  total_pages: number;
+  total_results: number;
+}
 
 // Базова конфігурація axios
 const axiosInstance = axios.create({
@@ -9,13 +16,8 @@ const axiosInstance = axios.create({
   },
 });
 
-/**
- * Пошук фільмів за ключовим словом
- * @param query - текст запиту
- * @returns масив фільмів
- */
 export async function searchMovies(query: string): Promise<Movie[]> {
-  const response = await axiosInstance.get("/search/movie", {
+  const response = await axiosInstance.get<SearchMoviesResponse>("/search/movie", {
     params: { query },
   });
 

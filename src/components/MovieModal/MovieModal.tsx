@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import css from "./MovieModal.module.css";
-import type Movie from "../../types/movie";
+import type { Movie } from "../../types/movie";
 
 interface MovieModalProps {
   movie: Movie | null;
@@ -29,9 +29,6 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
 
   if (!movie) return null;
 
-  const modalRoot = document.getElementById("modal-root");
-  if (!modalRoot) return null;
-
   const backdropUrl = `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
 
   return createPortal(
@@ -53,6 +50,6 @@ export default function MovieModal({ movie, onClose }: MovieModalProps) {
         </div>
       </div>
     </div>,
-    modalRoot
+    document.body
   );
 }

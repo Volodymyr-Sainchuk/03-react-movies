@@ -1,5 +1,5 @@
 import SearchBar from "../SearchBar/SearchBar";
-import type Movie from "../../types/movie";
+import type { Movie } from "../../types/movie";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -18,11 +18,14 @@ export default function App() {
   useEffect(() => {
     if (!query) {
       setMovies([]);
+      setHasError(false);
       return;
     }
 
     const fetchMovies = async () => {
       setLoader(true);
+      setHasError(false);
+
       try {
         const response = await axios.get("https://api.themoviedb.org/3/search/movie", {
           params: { query },
@@ -35,13 +38,18 @@ export default function App() {
 
         if (data.results && data.results.length > 0) {
           setMovies(data.results);
+          setQuery("");
         } else {
           toast.error("Фільми за цим запитом не знайдено.");
           setMovies([]);
         }
       } catch (error) {
         setHasError(true);
-        console.error("Помилка при пошуку фільмів:", error);
+
+        if (import.meta.env.DEV) {
+          console.error("Помилка при пошуку фільмів:", error);
+        }
+
         toast.error("Сталася помилка під час пошуку.");
         setMovies([]);
       } finally {
